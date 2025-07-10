@@ -1,0 +1,76 @@
+.form {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  max-width: 500px;
+
+  label {
+    display: block;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    font-size: 18px;
+
+    input {
+      width: 100%;
+      padding: 0.6rem;
+      font-size: 18px;
+      margin-top: 0.4rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+
+      button {
+        margin-top: 1rem;
+        padding: 0.75rem 1.5rem;
+        font-size: 18px;
+        background-color: #0070f3;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #005bb5;
+      }
+
+    }
+  }
+}
+
+.timeGroup {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
+
+.form select,
+.form input[type="time"],
+.form input[type="date"],
+.form input[type="text"] {
+  font-size: 20px;
+  padding: 1rem;
+  border-radius: 8px;
+  width: 100%;
+  margin-top: 0.4rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.form select option {
+  font-size: 20px;
+  padding: 0.5rem;
+}
+
+.form button {
+  padding: 1rem 2rem;
+  font-size: 20px;
+}
