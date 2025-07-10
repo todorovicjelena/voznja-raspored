@@ -14,7 +14,9 @@ export default function LessonForm({
   onAdd,
   existingLessons,
 }: LessonFormProps) {
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(() => {
+    return new Date().toISOString().split("T")[0];
+  });
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [student, setStudent] = useState("");
