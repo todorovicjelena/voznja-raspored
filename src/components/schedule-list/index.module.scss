@@ -36,3 +36,44 @@
 }
 
 
+.dateGroup {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: cornflowerblue;
+  border-radius: 1rem;
+
+  h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 1rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .lessonItem {
+    padding: 0.6rem 0;
+    border-top: 1px dashed #ccc;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    button {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: #ccc;
+
+      &:hover {
+        color: red;
+      }
+    }
+  }
+}
+
+

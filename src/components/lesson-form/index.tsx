@@ -41,6 +41,15 @@ export default function LessonForm({
     }
   }, [date]);
 
+  function isPastDateTime(date: string, time: string): boolean {
+    if (!date || !time) return false;
+
+    const now = new Date();
+    const selected = new Date(`${date}T${time}`);
+
+    return selected < now;
+  }
+
   const handleTimeChange = (type: "start" | "end", value: string) => {
     if (type === "start") {
       setStartTime(value);
@@ -79,7 +88,13 @@ export default function LessonForm({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!date || !startTime || !endTime || !student) return;
+
+    if (isPastDateTime(date, startTime)) {
+      setError("⛔ Ne možeš zakazati čas u prošlosti.");
+      return;
+    }
 
     onAdd({
       id: uuidv4(),
@@ -94,6 +109,7 @@ export default function LessonForm({
     setStartTime("");
     setEndTime("");
     setStudent("");
+    setError("");
   };
 
   const generateTimeOptions = () => {
