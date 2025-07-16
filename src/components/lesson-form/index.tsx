@@ -169,7 +169,6 @@ export default function LessonForm({
                 ))}
               </select>
             </label>{" "}
-            <span>–</span>
             <label>
               ⏰ Kraj časa:
               <select
