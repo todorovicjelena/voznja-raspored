@@ -3,6 +3,19 @@
   --foreground: #171717;
 }
 
+:root {
+  --bg: #f9fafb;
+  --form-bg: #ffffff;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --text: #111827;
+  --subtle-text: #6b7280;
+  --border: #e5e7eb;
+  --radius: 12px;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --font: 'Inter', sans-serif;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -39,4 +52,8 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+select, input {
+  border:none;
 }

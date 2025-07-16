@@ -153,7 +153,6 @@ export default function LessonForm({
 
       <fieldset disabled={!!error}>
         <label>
-          ⏰ Vreme:
           <div className={styles.timeGroup}>
             <label>
               ⏰ Početak časa:
@@ -162,7 +161,7 @@ export default function LessonForm({
                 onChange={(e) => setStartTime(e.target.value)}
                 required
               >
-                <option value="">-- Izaberi vreme --</option>
+                <option value="">Izaberi</option>
                 {generateTimeOptions().map((time) => (
                   <option key={time} value={time} disabled={isTimeTaken(time)}>
                     {time}
@@ -179,7 +178,7 @@ export default function LessonForm({
                 required
                 disabled={!startTime}
               >
-                <option value="">-- Izaberi kraj --</option>
+                <option value="">Izaberi</option>
                 {getEndTimeOptions().map((time) => (
                   <option key={time} value={time}>
                     {time}

@@ -25,6 +25,24 @@ export default function ArchivePage() {
     setArchivedLessons(filtered);
   }, []);
 
+  const handleDeleteArchivedLesson = (id: string) => {
+    setArchivedLessons((prev) => {
+      const updated = prev.filter((lesson) => lesson.id !== id);
+
+      // Učitajte sve lekcije koje imate u localStorage
+      const allLessonsStr = localStorage.getItem("lessons");
+      if (allLessonsStr) {
+        const allLessons: Lesson[] = JSON.parse(allLessonsStr);
+        // Uklonite obrisanu lekciju iz svih lekcija
+        const updatedAll = allLessons.filter((lesson) => lesson.id !== id);
+        // Sačuvajte nazad u localStorage
+        localStorage.setItem("lessons", JSON.stringify(updatedAll));
+      }
+
+      return updated;
+    });
+  };
+
   return (
     <main>
       <button onClick={() => window.history.back()} className={styles.button}>
@@ -33,7 +51,10 @@ export default function ArchivePage() {
       <h1 style={{ fontSize: "26px", marginBottom: "1rem" }}>
         🕘 Arhiva – Prethodna nedelja
       </h1>
-      <ScheduleList lessons={archivedLessons} onDelete={() => {}} />
+      <ScheduleList
+        lessons={archivedLessons}
+        onDelete={handleDeleteArchivedLesson}
+      />
     </main>
   );
 }

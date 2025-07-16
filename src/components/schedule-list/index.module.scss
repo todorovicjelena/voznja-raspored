@@ -1,52 +1,21 @@
-.dateGroup {
-  margin-bottom: 2rem;
-  padding: 1rem;
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-
-  h2 {
-    font-size: 22px;
-    margin-bottom: 0.5rem;
-  }
-
-  ul {
-    list-style: none;
-    padding-left: 0;
-  }
-
-  button {
-    background: transparent;
-    border: none;
-    color: #c00;
-    font-size: 20px;
-    cursor: pointer;
-  }
-}
-
-.lessonItem {
-  font-size: 18px;
-  margin-bottom: 0.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  border-bottom: 1px dashed #ccc;
-  padding-bottom: 0.4rem;
-}
-
+$form-background: #f5f7fa;
+$card-background: #ffffff;
+$primary: #2e8b57;
+$primary-hover: darken($primary, 10%);
+$text-dark: #222;
+$text-light: #555;
+$border-color: #ccc;
 
 .dateGroup {
-  margin-top: 2rem;
-  padding: 1rem;
-  background: cornflowerblue;
-  border-radius: 1rem;
+  background: #fff;
+  border-radius: 10px;
+  padding: 16px;
+  margin: 1.5rem auto;
+  max-width: 600px;
 
   h2 {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: white;
     margin-bottom: 1rem;
+    font-size: 20px;
   }
 
   ul {
@@ -54,20 +23,23 @@
     padding: 0;
   }
 
-  .lessonItem {
-    padding: 0.6rem 0;
-    border-top: 1px dashed #ccc;
-    color: white;
+  li {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px dashed #ddd;
+    font-size: 16px;
+
+    strong {
+      font-weight: 600;
+      color: $text-dark;
+    }
 
     button {
-      background: none;
+      background: transparent;
       border: none;
-      font-size: 1.2rem;
       cursor: pointer;
-      color: #ccc;
+      font-size: 18px;
 
       &:hover {
         color: red;

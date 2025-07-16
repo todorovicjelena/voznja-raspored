@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import LessonForm from "@/components/lesson-form/index";
 import ScheduleList from "@/components/schedule-list/index";
 import { Lesson } from "@/types/types";
+import styles from "./page.module.css";
 
 export default function HomePage() {
   const [allLessons, setAllLessons] = useState<Lesson[]>([]);
@@ -56,7 +57,7 @@ export default function HomePage() {
   };
 
   return (
-    <main>
+    <main className={styles.pageWrapper}>
       <h1 style={{ fontSize: "28px", marginBottom: "1rem" }}>
         📋 Plan časova vožnje
       </h1>

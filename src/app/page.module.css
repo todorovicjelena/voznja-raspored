@@ -16,6 +16,12 @@
   font-family: var(--font-geist-sans);
 }
 
+.pageWrapper {
+  background-color: #e8f0fe;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
 @media (prefers-color-scheme: dark) {
   .page {
     --gray-rgb: 255, 255, 255;
