@@ -155,7 +155,7 @@ export default function LessonForm({
         <label>
           <div className={styles.timeGroup}>
             <label>
-              ⏰ Početak časa:
+              ⏰ Početak:
               <select
                 value={startTime}
                 onChange={(e) => setStartTime(e.target.value)}
@@ -170,7 +170,7 @@ export default function LessonForm({
               </select>
             </label>{" "}
             <label>
-              ⏰ Kraj časa:
+              ⏰ Kraj:
               <select
                 value={endTime}
                 onChange={(e) => handleTimeChange("end", e.target.value)}
