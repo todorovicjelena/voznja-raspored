@@ -68,8 +68,6 @@ export default function LessonForm({
         setError("");
       }
     }
-
-    setError("");
   };
 
   const checkConflict = (start: string, end: string) => {
@@ -158,7 +156,7 @@ export default function LessonForm({
               <div> ⏰ Početak:</div>
               <select
                 value={startTime}
-                onChange={(e) => setStartTime(e.target.value)}
+                onChange={(e) => handleTimeChange("start", e.target.value)}
                 required
               >
                 <option value="">Izaberi</option>
