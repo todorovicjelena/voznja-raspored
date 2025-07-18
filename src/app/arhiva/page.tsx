@@ -44,13 +44,11 @@ export default function ArchivePage() {
   };
 
   return (
-    <main>
+    <main style={{ padding: "2rem" }}>
       <button onClick={() => window.history.back()} className={styles.button}>
         🔙 Nazad
       </button>
-      <h1 style={{ fontSize: "26px", marginBottom: "1rem" }}>
-        🕘 Arhiva – Prethodna nedelja
-      </h1>
+      <h1 style={{ fontSize: "20px", marginBottom: "1rem" }}>🕘 Arhiva</h1>
       <ScheduleList
         lessons={archivedLessons}
         onDelete={handleDeleteArchivedLesson}

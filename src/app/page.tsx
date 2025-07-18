@@ -67,7 +67,7 @@ export default function HomePage() {
         onDelete={handleDeleteLesson}
         loading={loading}
       />
-      <a href="/arhiva" style={{ fontSize: "28px" }}>
+      <a href="/arhiva" style={{ fontSize: "20px" }}>
         📂 Arhiva
       </a>
     </main>

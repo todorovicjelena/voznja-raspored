@@ -152,10 +152,10 @@ export default function LessonForm({
       </label>
 
       <fieldset disabled={!!error}>
-        <label>
-          <div className={styles.timeGroup}>
+        <div className={styles.timeGroup}>
+          <div>
             <label>
-              ⏰ Početak:
+              <div> ⏰ Početak:</div>
               <select
                 value={startTime}
                 onChange={(e) => setStartTime(e.target.value)}
@@ -168,14 +168,15 @@ export default function LessonForm({
                   </option>
                 ))}
               </select>
-            </label>{" "}
+            </label>
+          </div>
+          <div>
             <label>
-              ⏰ Kraj:
+              <div> ⏰ Kraj:</div>
               <select
                 value={endTime}
                 onChange={(e) => handleTimeChange("end", e.target.value)}
                 required
-                disabled={!startTime}
               >
                 <option value="">Izaberi</option>
                 {getEndTimeOptions().map((time) => (
@@ -184,9 +185,9 @@ export default function LessonForm({
                   </option>
                 ))}
               </select>
-            </label>{" "}
+            </label>
           </div>
-        </label>
+        </div>
 
         <label>
           👤 Učenik:
@@ -200,7 +201,7 @@ export default function LessonForm({
         </label>
 
         <button type="submit" disabled={!!error}>
-          ✅ Dodaj čas
+          + Dodaj čas
         </button>
       </fieldset>
 
