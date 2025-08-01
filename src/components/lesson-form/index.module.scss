@@ -1,16 +1,9 @@
-$form-background: #f5f7fa;
-$card-background: #ffffff;
-$primary: #2e8b57;
-$text-dark: #222;
-$text-light: #ffff;
-$border-color: #ccc;
-
 .form {
   padding: 24px;
   max-width: 600px;
   //margin: 2rem auto;
   font-family: system-ui, sans-serif;
-  color: $text-light;
+  color: #ffff;
 
   fieldset {
     overflow: hidden;
@@ -28,7 +21,7 @@ $border-color: #ccc;
     margin-bottom: 1rem;
     font-size: 14px;
     font-weight: 600;
-    color: $text-light;
+    color: #ffff;
   }
 
   input,
