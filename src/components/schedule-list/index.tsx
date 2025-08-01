@@ -1,7 +1,7 @@
 "use client";
 
 import { Lesson } from "@/types/types";
-import { Pencil, Trash2, User } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 import styles from "./index.module.scss";
 
 type Props = {
