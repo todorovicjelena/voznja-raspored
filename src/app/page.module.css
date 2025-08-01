@@ -17,7 +17,7 @@
 }
 
 .pageWrapper {
-  background-color: #e8f0fe;
+  background: linear-gradient(135deg, #2d52ec 0%, #e6ebfa 100%);
   min-height: 100vh;
   padding: 2rem;
 }

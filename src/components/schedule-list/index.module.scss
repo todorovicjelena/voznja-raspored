@@ -24,15 +24,25 @@ $border-color: #ccc;
   }
 
   li {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 2fr auto auto;
+    align-items: center;
     padding: 8px 0;
     border-bottom: 1px dashed #ddd;
     font-size: 16px;
+    gap: 0.7rem;
 
-    strong {
+    .time {
+      color: #666;
+      font-size: 16px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .student {
       font-weight: 600;
       color: $text-dark;
+      word-break: break-word;
     }
 
     button {
@@ -47,6 +57,7 @@ $border-color: #ccc;
     }
   }
 }
+
 
 .editButton {
   background: none;

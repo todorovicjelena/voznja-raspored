@@ -1,15 +1,22 @@
 "use client";
 
 import { Lesson } from "@/types/types";
+import { Pencil, Trash2, User } from "lucide-react";
 import styles from "./index.module.scss";
 
 type Props = {
   lessons: Lesson[];
   onDelete: (id: string) => void;
+  onEdit?: (lesson: Lesson) => void;
   loading?: boolean;
 };
 
-export default function ScheduleList({ lessons, onDelete, loading }: Props) {
+export default function ScheduleList({
+  lessons,
+  onDelete,
+  onEdit,
+  loading,
+}: Props) {
   if (loading) return null;
 
   const grouped = lessons.reduce<Record<string, Lesson[]>>((acc, lesson) => {
@@ -32,8 +39,10 @@ export default function ScheduleList({ lessons, onDelete, loading }: Props) {
               .sort((a, b) => a.startTime.localeCompare(b.startTime))
               .map((lesson) => (
                 <li key={lesson.id} className={styles.lessonItem}>
-                  {lesson.startTime} – {lesson.endTime}{" "}
-                  <strong>{lesson.student}</strong>
+                  <div className={styles.time}>
+                    {lesson.startTime} – {lesson.endTime}
+                  </div>
+                  <div className={styles.student}>{lesson.student}</div>
                   <button
                     onClick={() => {
                       const message = `Da li ste sigurni da želite da izbrišete termin za ${lesson.student} (${formattedDate(lesson)}, ${lesson.startTime} – ${lesson.endTime})?`;
@@ -42,9 +51,15 @@ export default function ScheduleList({ lessons, onDelete, loading }: Props) {
                         onDelete(lesson.id);
                       }
                     }}
+                    title="Obriši"
                   >
-                    🗑️
+                    <Trash2 color="#2d52ec" size={15} />
                   </button>
+                  {onEdit && (
+                    <button onClick={() => onEdit(lesson)} title="Izmeni">
+                      <Pencil color="#2d52ec" size={15} />
+                    </button>
+                  )}
                 </li>
               ))}
           </ul>

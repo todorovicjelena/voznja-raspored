@@ -3,50 +3,41 @@
 import { useState, useEffect } from "react";
 import { Lesson } from "@/types/types";
 import { v4 as uuidv4 } from "uuid";
+import { CalendarDays, Clock, User } from "lucide-react";
 import styles from "./index.module.scss";
 
 type LessonFormProps = {
   onAdd: (lesson: Lesson) => void;
   existingLessons: Lesson[] | null;
+  lessonToEdit?: Lesson;
 };
 
 export default function LessonForm({
   onAdd,
   existingLessons,
+  lessonToEdit,
 }: LessonFormProps) {
-  const [date, setDate] = useState(() => {
-    return new Date().toISOString().split("T")[0];
-  });
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
-  const [student, setStudent] = useState("");
+  const [date, setDate] = useState(() =>
+    lessonToEdit ? lessonToEdit.date : new Date().toISOString().split("T")[0],
+  );
+  const [startTime, setStartTime] = useState(lessonToEdit?.startTime || "");
+  const [endTime, setEndTime] = useState(lessonToEdit?.endTime || "");
+  const [student, setStudent] = useState(lessonToEdit?.student || "");
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (!date) {
-      setError("");
-      return;
-    }
-
-    const selected = new Date(date);
-    selected.setHours(0, 0, 0, 0);
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    if (selected < today) {
-      setError("⛔ Ovaj datum je u prošlosti – koristi arhivu.");
-    } else {
-      setError("");
-    }
-  }, [date]);
+    setDate(
+      lessonToEdit ? lessonToEdit.date : new Date().toISOString().split("T")[0],
+    );
+    setStartTime(lessonToEdit?.startTime || "");
+    setEndTime(lessonToEdit?.endTime || "");
+    setStudent(lessonToEdit?.student || "");
+  }, [lessonToEdit]);
 
   function isPastDateTime(date: string, time: string): boolean {
     if (!date || !time) return false;
-
     const now = new Date();
     const selected = new Date(`${date}T${time}`);
-
     return selected < now;
   }
 
@@ -72,10 +63,9 @@ export default function LessonForm({
 
   const checkConflict = (start: string, end: string) => {
     if (!date || !start || !end) return false;
-
     return existingLessons?.some((l) => {
+      if (lessonToEdit && l.id === lessonToEdit.id) return false; // Ignore current lesson
       if (l.date !== date) return false;
-
       return (
         (start >= l.startTime && start < l.endTime) ||
         (end > l.startTime && end <= l.endTime) ||
@@ -86,29 +76,33 @@ export default function LessonForm({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!date || !startTime || !endTime || !student) return;
-
     if (isPastDateTime(date, startTime)) {
       setError("⛔ Ne možeš zakazati čas u prošlosti.");
       return;
     }
-
     onAdd({
-      id: uuidv4(),
+      id: lessonToEdit ? lessonToEdit.id : uuidv4(),
       date,
       startTime,
       endTime,
       student,
     });
-
-    // Reset form
-    setDate("");
-    setStartTime("");
-    setEndTime("");
-    setStudent("");
-    setError("");
+    // Reset form only if adding new
+    if (!lessonToEdit) {
+      setDate("");
+      setStartTime("");
+      setEndTime("");
+      setStudent("");
+      setError("");
+    }
   };
+
+  useEffect(() => {
+    if (date && !isPastDateTime(date, startTime)) {
+      setError("");
+    }
+  }, [date, startTime]);
 
   const generateTimeOptions = () => {
     const times: string[] = [];
@@ -125,22 +119,26 @@ export default function LessonForm({
   const isTimeTaken = (time: string) => {
     if (!date) return false;
     return existingLessons?.some((l) => {
+      if (lessonToEdit && l.id === lessonToEdit.id) return false;
       if (l.date !== date) return false;
       return time >= l.startTime && time < l.endTime;
     });
   };
+
   const getEndTimeOptions = () => {
     if (!startTime) return [];
-
     return generateTimeOptions().filter((time) => {
       return time > startTime && !checkConflict(startTime, time);
     });
   };
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
+    <form
+      onSubmit={handleSubmit}
+      className={`${styles.form} ${lessonToEdit ? styles.editMode : ""}`}
+    >
       <label>
-        📅 Datum:
+        <CalendarDays color="white" size={15} /> Datum:
         <input
           type="date"
           value={date}
@@ -153,7 +151,10 @@ export default function LessonForm({
         <div className={styles.timeGroup}>
           <div>
             <label>
-              <div> ⏰ Početak:</div>
+              <div>
+                {" "}
+                <Clock color="white" size={15} /> Početak:
+              </div>
               <select
                 value={startTime}
                 onChange={(e) => handleTimeChange("start", e.target.value)}
@@ -170,7 +171,10 @@ export default function LessonForm({
           </div>
           <div>
             <label>
-              <div> ⏰ Kraj:</div>
+              <div>
+                {" "}
+                <Clock color="white" size={15} /> Kraj:
+              </div>
               <select
                 value={endTime}
                 onChange={(e) => handleTimeChange("end", e.target.value)}
@@ -188,7 +192,7 @@ export default function LessonForm({
         </div>
 
         <label>
-          👤 Učenik:
+          <User color="white" size={15} /> Učenik:
           <input
             type="text"
             placeholder="Ime i prezime"
@@ -199,7 +203,7 @@ export default function LessonForm({
         </label>
 
         <button type="submit" disabled={!!error}>
-          + Dodaj čas
+          {lessonToEdit ? "Sačuvaj izmene" : "+ Dodaj čas"}
         </button>
       </fieldset>
 

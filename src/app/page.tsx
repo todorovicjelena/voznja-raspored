@@ -10,6 +10,9 @@ export default function HomePage() {
   const [allLessons, setAllLessons] = useState<Lesson[]>([]);
   const [filteredLessons, setFilteredLessons] = useState<Lesson[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedLesson, setSelectedLesson] = useState<Lesson | undefined>(
+    undefined,
+  );
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -47,8 +50,16 @@ export default function HomePage() {
   };
 
   const handleAddLesson = (lesson: Lesson) => {
-    const updated = [...allLessons, lesson];
-    updateAndFilter(updated);
+    if (selectedLesson) {
+      // Edit mode: update existing lesson
+      const updated = allLessons.map((l) => (l.id === lesson.id ? lesson : l));
+      updateAndFilter(updated);
+      setSelectedLesson(undefined);
+    } else {
+      // Add mode: add new lesson
+      const updated = [...allLessons, lesson];
+      updateAndFilter(updated);
+    }
   };
 
   const handleDeleteLesson = (id: string) => {
@@ -56,20 +67,31 @@ export default function HomePage() {
     updateAndFilter(updated);
   };
 
+  // Example: pass setSelectedLesson to ScheduleList so it can trigger edit
+  // You need to implement the edit button in ScheduleList to call this
   return (
     <main className={styles.pageWrapper}>
-      <h1 style={{ fontSize: "28px", marginBottom: "1rem" }}>
-        📋 Plan časova vožnje
+      <h1
+        style={{
+          fontSize: "28px",
+          marginBottom: "1rem",
+          color: "#ffff",
+          textAlign: "center",
+        }}
+      >
+        Plan časova vožnje
       </h1>
-      <LessonForm onAdd={handleAddLesson} existingLessons={filteredLessons} />
+      <LessonForm
+        onAdd={handleAddLesson}
+        existingLessons={filteredLessons}
+        lessonToEdit={selectedLesson}
+      />
       <ScheduleList
         lessons={filteredLessons}
         onDelete={handleDeleteLesson}
         loading={loading}
+        onEdit={setSelectedLesson} // Add this prop to ScheduleList
       />
-      <a href="/arhiva" style={{ fontSize: "20px" }}>
-        📂 Arhiva
-      </a>
     </main>
   );
 }
