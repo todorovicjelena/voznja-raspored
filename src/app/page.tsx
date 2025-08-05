@@ -6,6 +6,20 @@ import ScheduleList from "@/components/schedule-list/index";
 import { Lesson } from "@/types/types";
 import styles from "./page.module.css";
 
+function getStartAndEndOfWeek(date: Date) {
+  const day = date.getDay(); // 0 = Sunday, 1 = Monday, ...
+  const diffToMonday = (day + 6) % 7; // koliko dana unazad do ponedeljka
+  const monday = new Date(date);
+  monday.setDate(date.getDate() - diffToMonday);
+  monday.setHours(0, 0, 0, 0);
+
+  const saturday = new Date(monday);
+  saturday.setDate(monday.getDate() + 5);
+  saturday.setHours(23, 59, 59, 999);
+
+  return { monday, saturday };
+}
+
 export default function HomePage() {
   const [allLessons, setAllLessons] = useState<Lesson[]>([]);
   const [filteredLessons, setFilteredLessons] = useState<Lesson[]>([]);
@@ -26,15 +40,14 @@ export default function HomePage() {
     const all: Lesson[] = JSON.parse(data);
     setAllLessons(all);
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const { monday, saturday } = getStartAndEndOfWeek(new Date());
 
-    const futureOnly = all.filter((lesson) => {
+    const weeklyLessons = all.filter((lesson) => {
       const d = new Date(lesson.date);
-      return d >= today;
+      return d >= monday && d <= saturday;
     });
 
-    setFilteredLessons(futureOnly);
+    setFilteredLessons(weeklyLessons);
     setLoading(false);
   }, []);
 
@@ -42,11 +55,14 @@ export default function HomePage() {
     setAllLessons(updatedLessons);
     localStorage.setItem("lessons", JSON.stringify(updatedLessons));
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const { monday, saturday } = getStartAndEndOfWeek(new Date());
 
-    const futureOnly = updatedLessons.filter((l) => new Date(l.date) >= today);
-    setFilteredLessons(futureOnly);
+    const weeklyLessons = updatedLessons.filter((l) => {
+      const d = new Date(l.date);
+      return d >= monday && d <= saturday;
+    });
+
+    setFilteredLessons(weeklyLessons);
   };
 
   const handleAddLesson = (lesson: Lesson) => {

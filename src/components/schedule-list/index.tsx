@@ -33,7 +33,12 @@ export default function ScheduleList({
     <div>
       {sortedDates.map((date) => (
         <div key={date} className={styles.dateGroup}>
-          <h2>{new Date(date).toLocaleDateString("sr-RS")}</h2>
+          <h2>
+            {new Date(date).toLocaleDateString("sr-Latn-RS", {
+              day: "2-digit",
+              month: "long",
+            })}
+          </h2>
           <ul>
             {grouped[date]
               .sort((a, b) => a.startTime.localeCompare(b.startTime))
@@ -53,11 +58,11 @@ export default function ScheduleList({
                     }}
                     title="Obriši"
                   >
-                    <Trash2 color="#2d52ec" size={15} />
+                    <Trash2 color="cornflowerblue" size={15} />
                   </button>
                   {onEdit && (
                     <button onClick={() => onEdit(lesson)} title="Izmeni">
-                      <Pencil color="#2d52ec" size={15} />
+                      <Pencil color="cornflowerblue" size={15} />
                     </button>
                   )}
                 </li>
